@@ -29,9 +29,8 @@ import com.gengo.client.exceptions.GengoException;
 import com.gengo.client.payloads.TranslationJob;
 
 /**
- * An EJB bean that can crawl an URL.
- * It takes the start url, create a crawl job and then fire events for
- * all the other urls found on this site.
+ * An EJB bean that can crawl an URL. It takes the start url, create a crawl job
+ * and then fire events for all the other urls found on this site.
  * 
  * The crawl job gets a unique id and the status can be asked for.
  * 
@@ -69,7 +68,8 @@ public class Crawler {
 	/**
 	 * Start with the given url.
 	 * 
-	 * @param url the url to start on
+	 * @param url
+	 *            the url to start on
 	 * @return the CrawlJob that was created
 	 * @throws IOException
 	 */
@@ -140,21 +140,20 @@ public class Crawler {
 
 	public String submit(List<URLCrawlResult> selectedEntries)
 			throws GengoException {
-		String result = "";
+		List<TranslationJob> jobList = new ArrayList<TranslationJob>();
 		for (URLCrawlResult urlCrawlResult : selectedEntries) {
-			GengoClient Gengo = new GengoClient(
-					properties.getProperty("gengo.credentials.public_key"),
-					properties.getProperty("gengo.credentials.private_key"),
-					true);
-			List<TranslationJob> jobList = new ArrayList<TranslationJob>();
-			jobList.add(new TranslationJob("Translate: "+urlCrawlResult.getUrl(), urlCrawlResult
-					.getText(), urlCrawlResult.getSourceLanguage(),
-					urlCrawlResult.getTargetLanguage(), Tier
-							.valueOf(urlCrawlResult.getTier())));
-			JSONObject response = Gengo.postTranslationJobs(jobList, true);
-			result += response.toString();
+
+			jobList.add(new TranslationJob("Translate: "
+					+ urlCrawlResult.getUrl(), urlCrawlResult.getText(),
+					urlCrawlResult.getSourceLanguage(), urlCrawlResult
+							.getTargetLanguage(), Tier.valueOf(urlCrawlResult
+							.getTier())));
 		}
-		return result;
+		GengoClient Gengo = new GengoClient(
+				properties.getProperty("gengo.credentials.public_key"),
+				properties.getProperty("gengo.credentials.private_key"), true);
+		JSONObject response = Gengo.postTranslationJobs(jobList, true);
+		return response.toString();
 
 	}
 }

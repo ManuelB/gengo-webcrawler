@@ -108,19 +108,56 @@
 						<!-- column header -->
 						<f:facet name="header">Source Language</f:facet>
 						<!-- row record -->
-	    				#{entry.sourceLanguage}
+						<h:selectOneMenu value="#{entry.sourceLanguage}">
+						   	<f:selectItem itemValue="zh" itemLabel="Chinese (Simplified)" />
+						   	<f:selectItem itemValue="cs" itemLabel="Czech" />
+						   	<f:selectItem itemValue="fi" itemLabel="Finnish" />
+						   	<f:selectItem itemValue="en" itemLabel="English" />
+						   	<f:selectItem itemValue="fr" itemLabel="French" />
+						   	<f:selectItem itemValue="fr-ca" itemLabel="French (Canada)" />
+						   	<f:selectItem itemValue="de" itemLabel="German" />
+						   	<f:selectItem itemValue="hu" itemLabel="Hungarian" />
+						   	<f:selectItem itemValue="ja" itemLabel="Japanese" />
+						   	<f:selectItem itemValue="ms" itemLabel="Malay" />
+						   	<f:selectItem itemValue="no" itemLabel="Norwegian" />
+						   	<f:selectItem itemValue="pl" itemLabel="Polish" />
+						   	<f:selectItem itemValue="es" itemLabel="Spanish" />
+						   	<f:selectItem itemValue="sv" itemLabel="Swedish" />
+						   	<f:selectItem itemValue="th" itemLabel="Thai" />
+						</h:selectOneMenu>
 	    			</pf:column>
 	    			<pf:column sortBy="#{entry.targetLanguage}">
 						<!-- column header -->
 						<f:facet name="header">Target Language</f:facet>
 						<!-- row record -->
-	    				#{entry.targetLanguage}
+	    				<h:selectOneMenu value="#{entry.targetLanguage}">
+	    					<f:selectItem itemValue="zh" itemLabel="Chinese (Simplified)" />
+						   	<f:selectItem itemValue="cs" itemLabel="Czech" />
+						   	<f:selectItem itemValue="fi" itemLabel="Finnish" />
+						   	<f:selectItem itemValue="en" itemLabel="English" />
+						   	<f:selectItem itemValue="fr" itemLabel="French" />
+						   	<f:selectItem itemValue="fr-ca" itemLabel="French (Canada)" />
+						   	<f:selectItem itemValue="de" itemLabel="German" />
+						   	<f:selectItem itemValue="hu" itemLabel="Hungarian" />
+						   	<f:selectItem itemValue="ja" itemLabel="Japanese" />
+						   	<f:selectItem itemValue="ms" itemLabel="Malay" />
+						   	<f:selectItem itemValue="no" itemLabel="Norwegian" />
+						   	<f:selectItem itemValue="pl" itemLabel="Polish" />
+						   	<f:selectItem itemValue="es" itemLabel="Spanish" />
+						   	<f:selectItem itemValue="sv" itemLabel="Swedish" />
+						   	<f:selectItem itemValue="th" itemLabel="Thai" />
+						</h:selectOneMenu>
 	    			</pf:column>
 	    			<pf:column sortBy="#{entry.tier}">
 						<!-- column header -->
 						<f:facet name="header">Tier</f:facet>
 						<!-- row record -->
-	    				#{entry.tier}
+	    				<h:selectOneMenu value="#{entry.tier}">
+	    					<!-- <f:selectItem itemValue="MACHINE" itemLabel="MACHINE" /> -->
+	    					<f:selectItem itemValue="STANDARD" itemLabel="STANDARD" />
+	    					<f:selectItem itemValue="PRO" itemLabel="PRO" />
+	    					<!-- <f:selectItem itemValue="ULTRA" itemLabel="ULTRA" /> -->
+	    				</h:selectOneMenu>
 	    			</pf:column>
 
 				</pf:dataTable>
