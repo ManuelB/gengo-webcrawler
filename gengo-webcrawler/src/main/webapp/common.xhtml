@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+<h:head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title><ui:insert name="title">Gengo Website Crawler for translations</ui:insert></title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link
+		href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
+		rel="stylesheet" />
+
+	<!-- Optional theme -->
+	<link rel="stylesheet"
+		href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
+
+	<h:outputStylesheet library="css" name="style.css" />
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<o:conditionalComment if="lt IE 9">
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script
+			src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	</o:conditionalComment>
+	<ui:insert name="head">
+		<!-- Insert head thing here -->
+	</ui:insert>
+</h:head>
+<h:body>
+	<div class="container-fluid">
+		<ui:insert name="content">
+	  		Default Content!
+	   	</ui:insert>
+	</div>
+	<p class="text-center margin">
+		<a href="http://www.apaxo.de" target="_blank">&#169; 2014 Apaxo
+			GmbH</a>
+	</p>
+	<!-- /container -->
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script
+		src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+</h:body>
+</html>

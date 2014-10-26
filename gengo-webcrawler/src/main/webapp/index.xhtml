@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pf="http://primefaces.org/ui" template="common.xhtml">
+	<ui:define name="head">
+		<c:if
+			test="#{index.crawlJob != null and index.crawlJob.totalUrls.get() != index.crawlJob.completedUrls.get()}">
+			<meta http-equiv="refresh" content="1" />
+		</c:if>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="gengo-crawl-form">
+			<legend>Gengo translation crawler</legend>
+			<c:if test="#{index.crawlJob == null}">
+				<div class="row form-group">
+					<div class="col-xs-12">
+						<label for="gengo-crawl-form:url" class="sr-only">URL:</label>
+						<h:inputText type="text" id="url" value="#{index.url}"
+							styleClass="form-control url input-lg"
+							p:placeholder="url for cralwing e.g. http://www.example.org" />
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-xs-12">
+						<label for="gengo-crawl-form:selector" class="sr-only">Selector
+							to only take from:</label> <label for="gengo-crawl-form:selector"
+							class="sr-only">Selector:</label>
+						<h:inputText type="text" id="selector" value="#{index.selector}"
+							styleClass="form-control selector input-lg"
+							p:placeholder="the selector for the text e.g. #secondContainer" />
+
+					</div>
+				</div>
+				<h:commandButton value="Crawl website"
+					styleClass="btn btn-large btn-primary pull-right col-xs-4 input-lg"
+					action="#{index.crawl}"></h:commandButton>
+				<br />
+
+			</c:if>
+
+			<c:if test="#{index.crawlJob != null and index.crawlJob.totalUrls.get() != index.crawlJob.completedUrls.get()}">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Crawl id</td>
+							<td>#{index.crawlJob.id}</td>
+						</tr>
+						<tr>
+							<td>Crawl start url</td>
+							<td>#{index.crawlJob.startUrl}</td>
+						</tr>
+						<tr>
+							<td>Completed Urls</td>
+							<td>#{index.crawlJob.completedUrls.get()}</td>
+						</tr>
+						<tr>
+							<td>Total Urls</td>
+							<td>#{index.crawlJob.totalUrls}</td>
+						</tr>
+					</tbody>
+				</table>
+			</c:if>
+
+			<h:messages styleClass="alert alert-danger pull-left" />
+			<br />
+
+
+			<c:if
+				test="#{index.crawlJob != null and index.crawlJob.totalUrls.get() == index.crawlJob.completedUrls.get()}">
+
+				<pf:dataTable id="found-urls"
+					value="#{index.crawlJob.urlCrawlResults}" var="entry"
+					styleClass="found-urls"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					paginator="true" rows="30">
+
+					<pf:column>
+						<!-- column header -->
+						<f:facet name="header">Send?</f:facet>
+						<h:selectBooleanCheckbox value="#{index.selected[entry.url]}" />
+					</pf:column>
+
+					<pf:column styleClass="text-left" sortBy="#{entry.url}">
+						<!-- column header -->
+						<f:facet name="header">URL</f:facet>
+						<!-- row record -->
+						#{entry.url}
+					</pf:column>
+					<pf:column sortBy="#{entry.wordCount}">
+						<!-- column header -->
+						<f:facet name="header">Words</f:facet>
+						<!-- row record -->
+	    				#{entry.wordCount}
+	    			</pf:column>
+	    			<pf:column sortBy="#{entry.sourceLanguage}">
+						<!-- column header -->
+						<f:facet name="header">Source Language</f:facet>
+						<!-- row record -->
+	    				#{entry.sourceLanguage}
+	    			</pf:column>
+	    			<pf:column sortBy="#{entry.targetLanguage}">
+						<!-- column header -->
+						<f:facet name="header">Target Language</f:facet>
+						<!-- row record -->
+	    				#{entry.targetLanguage}
+	    			</pf:column>
+	    			<pf:column sortBy="#{entry.tier}">
+						<!-- column header -->
+						<f:facet name="header">Tier</f:facet>
+						<!-- row record -->
+	    				#{entry.tier}
+	    			</pf:column>
+
+				</pf:dataTable>
+				
+				<p class="text-center margin">
+					<h:commandButton value="Submit to gengo"
+						styleClass="btn btn-large btn-primary input-lg"
+						action="#{index.submit}">
+						<f:param name="id" value="#{index.crawlJob.id}" />
+					</h:commandButton>
+				</p>
+				
+
+				<p class="text-center">
+					Total results
+					<h:outputText value="#{index.crawlJob.urlCrawlResults.size()}"></h:outputText>
+				</p>
+				<c:if test="#{index.crawlJob.throwables.size() gt 0}">
+					<h2>Errors</h2>
+					<pf:dataTable id="errors" value="#{index.crawlJob.throwables}"
+						var="entry" rows="30">
+
+						<pf:column>
+							<!-- column header -->
+							<f:facet name="header">Message</f:facet>
+							<h:outputText value="#{entry.localizedMessage}" />
+						</pf:column>
+					</pf:dataTable>
+				</c:if>	
+			</c:if>
+		</h:form>
+	</ui:define>
+</ui:composition>
