@@ -149,9 +149,14 @@ public class Crawler {
 							.getTargetLanguage(), Tier.valueOf(urlCrawlResult
 							.getTier())));
 		}
+		String sandboxProperty = properties
+				.getProperty("gengo.credentials.sandbox");
+		boolean sandbox = sandboxProperty == null
+				|| sandboxProperty.equals("true");
 		GengoClient Gengo = new GengoClient(
 				properties.getProperty("gengo.credentials.public_key"),
-				properties.getProperty("gengo.credentials.private_key"), true);
+				properties.getProperty("gengo.credentials.private_key"),
+				sandbox);
 		JSONObject response = Gengo.postTranslationJobs(jobList, true);
 		return response.toString();
 
