@@ -219,6 +219,5 @@ public class Crawler {
 				sandbox);
 		JSONObject response = Gengo.postTranslationJobs(jobList, true);
 		return response.toString();
-
 	}
 }

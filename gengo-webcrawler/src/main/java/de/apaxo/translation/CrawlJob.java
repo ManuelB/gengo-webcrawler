@@ -41,6 +41,10 @@ public class CrawlJob implements Serializable {
 		return urlCrawlResults;
 	}
 
+	public void setUrlCrawlResults(List<URLCrawlResult> urlCrawlResults) {
+		this.urlCrawlResults = urlCrawlResults;
+	}
+
 	public List<Throwable> getThrowables() {
 		return throwables;
 	}

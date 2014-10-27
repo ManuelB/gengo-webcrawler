@@ -12,10 +12,16 @@ body {
 	margin: 1em;	
 }
 .found-urls td:nth-child(1), .found-urls th:nth-child(1) {
-    width: 5rem;
+    width: 5vw;
 }
 .found-urls td:nth-child(2), .found-urls th:nth-child(2) {
-    width: 50rem;
+    width: 40vw;
+}
+table select {
+	width: 100%;
+}
+table {
+	font-size: 1.2vw;
 }
 /* iPads (portrait and landscape) ----------- */
 @media only screen and (min-width : 768px) {
@@ -180,7 +186,7 @@ body {
 .hint--bottom:after {
   margin-left: -18px;
   width: 70vw;
-  white-space: pre;
+  white-space: pre-line;
 }
 .hint--bottom:before, .hint--bottom:after {
   top: 100%;

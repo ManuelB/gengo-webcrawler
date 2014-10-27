@@ -91,7 +91,7 @@
 						<h:selectBooleanCheckbox value="#{index.selected[entry.url]}" />
 					</pf:column>
 
-					<pf:column styleClass="text-left" sortBy="#{entry.url}">
+					<pf:column styleClass="text-left" sortBy="#{entry.url.toString()}">
 						<!-- column header -->
 						<f:facet name="header">URL</f:facet>
 						<!-- row record -->
@@ -103,7 +103,7 @@
 						<!-- row record -->
 	    				#{entry.wordCount}
 	    			</pf:column>
-	    			<pf:column sortBy="#{entry.sourceLanguage}">
+	    			<pf:column>
 						<!-- column header -->
 						<f:facet name="header">Source Language</f:facet>
 						<!-- row record -->
@@ -125,7 +125,7 @@
 						   	<f:selectItem itemValue="th" itemLabel="Thai" />
 						</h:selectOneMenu>
 	    			</pf:column>
-	    			<pf:column sortBy="#{entry.targetLanguage}">
+	    			<pf:column>
 						<!-- column header -->
 						<f:facet name="header">Target Language</f:facet>
 						<!-- row record -->
@@ -147,7 +147,7 @@
 						   	<f:selectItem itemValue="th" itemLabel="Thai" />
 						</h:selectOneMenu>
 	    			</pf:column>
-	    			<pf:column sortBy="#{entry.tier}">
+	    			<pf:column>
 						<!-- column header -->
 						<f:facet name="header">Tier</f:facet>
 						<!-- row record -->

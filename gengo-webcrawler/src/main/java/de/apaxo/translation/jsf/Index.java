@@ -11,13 +11,16 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import de.apaxo.translation.CrawlJob;
 import de.apaxo.translation.Crawler;
 import de.apaxo.translation.URLCrawlResult;
 
-@Model
+@Named
+@ViewScoped
 public class Index implements Serializable {
 
 	@Inject
@@ -39,7 +42,7 @@ public class Index implements Serializable {
 	public void init() {
 		setId(FacesContext.getCurrentInstance().getExternalContext()
 				.getRequestParameterMap().get("id"));
-		if(getId() != null) {
+		if (getId() != null) {
 			setCrawlJob(crawler.get(getId()));
 		}
 
@@ -51,7 +54,8 @@ public class Index implements Serializable {
 	public String crawl() {
 		try {
 			setId(crawler.startWithUrl(getUrl(), getSelector()).getId());
-			return "index?id="+getId()+"faces-redirect=true&includeViewParams=true";
+			return "index?id=" + getId()
+					+ "faces-redirect=true&includeViewParams=true";
 		} catch (Exception ex) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(ex.getLocalizedMessage()));
@@ -61,6 +65,7 @@ public class Index implements Serializable {
 
 	/**
 	 * Submit the crawled URLs to gengo.
+	 * 
 	 * @return
 	 */
 	public String submit() {
@@ -70,6 +75,8 @@ public class Index implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(ex.getLocalizedMessage()));
 		}
+		FacesContext.getCurrentInstance().getExternalContext().getFlash()
+				.put("index", this);
 		return "submit";
 	}
 
@@ -107,6 +114,13 @@ public class Index implements Serializable {
 
 	public void setCrawlJob(CrawlJob crawlJob) {
 		this.crawlJob = crawlJob;
+		// Convert crawl results to normal array list
+		// prevent java.lang.UnsupportedOperationException
+		// at
+		// java.util.concurrent.CopyOnWriteArrayList$COWIterator.set(CopyOnWriteArrayList.java:1185)
+		// for sorting
+		this.crawlJob.setUrlCrawlResults(new ArrayList<>(this.crawlJob
+				.getUrlCrawlResults()));
 	}
 
 	public Map<String, Boolean> getSelected() {
