@@ -76,7 +76,6 @@
 			<h:messages styleClass="alert alert-danger pull-left" />
 			<br />
 
-
 			<c:if
 				test="#{index.crawlJob != null and index.crawlJob.totalUrls.get() == index.crawlJob.completedUrls.get()}">
 
@@ -96,7 +95,7 @@
 						<!-- column header -->
 						<f:facet name="header">URL</f:facet>
 						<!-- row record -->
-						#{entry.url}
+						<span class="hint--bottom" data-hint="#{entry.text}">#{entry.url}</span>
 					</pf:column>
 					<pf:column sortBy="#{entry.wordCount}">
 						<!-- column header -->
@@ -156,7 +155,7 @@
 	    					<!-- <f:selectItem itemValue="MACHINE" itemLabel="MACHINE" /> -->
 	    					<f:selectItem itemValue="STANDARD" itemLabel="STANDARD" />
 	    					<f:selectItem itemValue="PRO" itemLabel="PRO" />
-	    					<!-- <f:selectItem itemValue="ULTRA" itemLabel="ULTRA" /> -->
+	    					<f:selectItem itemValue="ULTRA" itemLabel="ULTRA" />
 	    				</h:selectOneMenu>
 	    			</pf:column>
 

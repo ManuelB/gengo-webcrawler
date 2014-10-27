@@ -117,7 +117,7 @@ public class Crawler {
 			String text;
 			if (selector != null) {
 				try {
-					text = doc.select(selector).text();
+					text = getPlainText(doc.select(selector).select("*"));
 				} catch (Throwable t) {
 					text = "Problem with css selector: " + selector;
 					log.log(Level.WARNING, text + " on url " + url.toString(),
@@ -125,7 +125,7 @@ public class Crawler {
 					crawlJob.getThrowables().add(t);
 				}
 			} else {
-				text = doc.text();
+				text = getPlainText(doc);
 			}
 			URLCrawlResult urlCrawlResult = new URLCrawlResult(url, text);
 			crawlJobs.get(crawlJob.getId()).getUrlCrawlResults()
@@ -138,6 +138,66 @@ public class Crawler {
 		}
 	}
 
+	/**
+	 * Gets the plain text from the elements.
+	 * 
+	 * @param elements
+	 * @return
+	 */
+	public static String getPlainText(Elements elements) {
+
+		String noHTMLString = "";
+		StringBuilder output = new StringBuilder();
+		try {
+
+			for (Element el : elements) {
+				if (el.tagName().equals("h1")) {
+					output.append("= " + el.ownText() + " =\n");
+				} else if (el.tagName().equals("h2")) {
+					output.append("== " + el.ownText() + " ==\n");
+				} else if (el.tagName().equals("h3")) {
+					output.append("=== " + el.ownText() + " ===\n");
+				} else if (el.tagName().equals("li")
+						&& el.parent().tagName().equals("ul")) {
+					output.append(" * " + el.ownText().replaceAll("[\r\n]+", "") + "\n");
+				} else if (el.tagName().equals("li")
+						&& el.parent().tagName().equals("ol")) {
+					output.append(" # " + el.ownText().replaceAll("[\r\n]+", "") + "\n");
+				} else {
+					output.append(el.ownText() + "\n");
+				}
+			}
+		} catch (Exception ex) {
+			log.log(Level.WARNING,
+					"An error occurred while converting html mime content  to text/plain output: ",
+					ex);
+		}
+
+		noHTMLString = output.toString();
+		if (noHTMLString != null) {
+			noHTMLString = noHTMLString.replaceAll("[\r\n]+", "\n");
+		}
+		return noHTMLString;
+
+	}
+
+	/**
+	 * Gets the plain text from the doc.
+	 * 
+	 * @param doc
+	 * @return
+	 */
+	public static String getPlainText(Document doc) {
+		return getPlainText(doc.select("*"));
+	}
+
+	/**
+	 * Send these entries to gengo for translation.
+	 * 
+	 * @param selectedEntries
+	 * @return
+	 * @throws GengoException
+	 */
 	public String submit(List<URLCrawlResult> selectedEntries)
 			throws GengoException {
 		List<TranslationJob> jobList = new ArrayList<TranslationJob>();

@@ -1,5 +1,6 @@
 package de.apaxo.translation;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doAnswer;
@@ -14,6 +15,8 @@ import java.util.logging.LogManager;
 import javax.cache.Cache;
 import javax.enterprise.event.Event;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -32,6 +35,24 @@ public class CrawlerTest {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Test
+	public void testGetPlainText() {
+		Document doc = Jsoup
+				.parse("<html><head><title>Hallo Welt</title></head><body><h1>Headline 1</h1><p>li bla blub</p><h2>More</h2><p>even more <br /> after br </p><ul><li>unordered</li><li>unorderd</li></ul><ol><li>one</li><li>two</li></ol></body></html>");
+		String plainText = Crawler.getPlainText(doc);
+		assertEquals("\n" + "Hallo Welt\n" + "= Headline 1 =\n"
+				+ "li bla blub\n" + "== More ==\n" + "even more after br\n"
+				+ " * unordered\n" + " * unorderd\n" + " # one\n" + " # two\n"
+				+ "", plainText);
+		doc = Jsoup
+				.parse("<html><head><title>Hallo Welt</title></head><body><h1>Headline 1</h1><p>li bla blub</p><h2>More</h2><p>even more <br /> after br </p><ul><li><li>unordered</li><li>unorderd</li></ul><ol><li>one</li><li>two</li><li></li></ol></body></html>");
+		plainText = Crawler.getPlainText(doc);
+		assertEquals("\n" + "Hallo Welt\n" + "= Headline 1 =\n"
+				+ "li bla blub\n" + "== More ==\n" + "even more after br\n"
+				+ " * \n * unordered\n" + " * unorderd\n" + " # one\n" + " # two\n # \n"
+				+ "", plainText);
 	}
 
 	@Test
@@ -54,7 +75,7 @@ public class CrawlerTest {
 
 			}
 		}).when(cache).put(anyString(), any(CrawlJob.class));
-		
+
 		when(cache.get(anyString())).thenAnswer(new Answer<CrawlJob>() {
 
 			@Override
@@ -62,7 +83,7 @@ public class CrawlerTest {
 					throws Throwable {
 				return map.get(invocation.getArguments()[0]);
 			}
-			
+
 		});
 
 		crawler.crawlJobs = cache;
