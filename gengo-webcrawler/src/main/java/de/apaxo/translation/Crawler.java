@@ -151,20 +151,25 @@ public class Crawler {
 		try {
 
 			for (Element el : elements) {
-				if (el.tagName().equals("h1")) {
-					output.append("= " + el.ownText() + " =\n");
-				} else if (el.tagName().equals("h2")) {
-					output.append("== " + el.ownText() + " ==\n");
-				} else if (el.tagName().equals("h3")) {
-					output.append("=== " + el.ownText() + " ===\n");
-				} else if (el.tagName().equals("li")
-						&& el.parent().tagName().equals("ul")) {
-					output.append(" * " + el.ownText().replaceAll("[\r\n]+", "") + "\n");
-				} else if (el.tagName().equals("li")
-						&& el.parent().tagName().equals("ol")) {
-					output.append(" # " + el.ownText().replaceAll("[\r\n]+", "") + "\n");
-				} else {
-					output.append(el.ownText() + "\n");
+				if (el != null && el.ownText() != null
+						&& !el.ownText().equals("")) {
+					if (el.tagName().equals("h1")) {
+						output.append("= " + el.ownText() + " =\n");
+					} else if (el.tagName().equals("h2")) {
+						output.append("== " + el.ownText() + " ==\n");
+					} else if (el.tagName().equals("h3")) {
+						output.append("=== " + el.ownText() + " ===\n");
+					} else if (el.tagName().equals("li")
+							&& el.parent().tagName().equals("ul")) {
+						output.append(" * "
+								+ el.ownText().replaceAll("[\r\n]+", "") + "\n");
+					} else if (el.tagName().equals("li")
+							&& el.parent().tagName().equals("ol")) {
+						output.append(" # "
+								+ el.ownText().replaceAll("[\r\n]+", "") + "\n");
+					} else {
+						output.append(el.ownText() + "\n");
+					}
 				}
 			}
 		} catch (Exception ex) {
