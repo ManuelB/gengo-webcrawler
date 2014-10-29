@@ -42,16 +42,16 @@ public class CrawlerTest {
 		Document doc = Jsoup
 				.parse("<html><head><title>Hallo Welt</title></head><body><h1>Headline 1</h1><p>li bla blub</p><h2>More</h2><p>even more <br /> after br </p><ul><li>unordered</li><li>unorderd</li></ul><ol><li>one</li><li>two</li></ol></body></html>");
 		String plainText = Crawler.getPlainText(doc);
-		assertEquals("Hallo Welt\n" + "= Headline 1 =\n"
-				+ "li bla blub\n" + "== More ==\n" + "even more after br\n"
-				+ " * unordered\n" + " * unorderd\n" + " # one\n" + " # two\n"
+		assertEquals("Hallo Welt\n" + "# Headline 1\n"
+				+ "li bla blub\n" + "## More\n" + "even more after br\n"
+				+ " * unordered\n" + " * unorderd\n" + " 1. one\n" + " 1. two\n"
 				+ "", plainText);
 		doc = Jsoup
 				.parse("<html><head><title>Hallo Welt</title></head><body><h1>Headline 1</h1><p>li bla blub</p><h2>More</h2><p>even more <br /> after br </p><ul><li><li>unordered</li><li>unorderd</li></ul><ol><li>one</li><li>two</li><li></li></ol></body></html>");
 		plainText = Crawler.getPlainText(doc);
-		assertEquals( "Hallo Welt\n" + "= Headline 1 =\n"
-				+ "li bla blub\n" + "== More ==\n" + "even more after br\n"
-				+ " * unordered\n" + " * unorderd\n" + " # one\n" + " # two\n"
+		assertEquals( "Hallo Welt\n" + "# Headline 1\n"
+				+ "li bla blub\n" + "## More\n" + "even more after br\n"
+				+ " * unordered\n" + " * unorderd\n" + " 1. one\n" + " 1. two\n"
 				+ "", plainText);
 	}
 
