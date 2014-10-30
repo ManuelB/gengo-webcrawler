@@ -99,7 +99,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-                            <outputDirectory>${project.build.directory}/classes</outputDirectory>
+							<outputDirectory>${project.build.directory}/classes</outputDirectory>
 							<resources>
 								<resource>
 									<directory>src/main/credentials</directory>
@@ -109,6 +109,39 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>1.3.1</version>
+				<executions>
+					<execution>
+						<id>enforce-property</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireProperty>
+									<property>gengo.credentials.public_key</property>
+									<message>You must set the gengo.credentials.public_key e.g
+										-Dgengo.credentials.public_key=dassada !</message>
+								</requireProperty>
+								<requireProperty>
+									<property>gengo.credentials.private_key</property>
+									<message>You must set the gengo.credentials.private_key e.g
+										-Dgengo.credentials.private_key=dassada !</message>
+								</requireProperty>
+							</rules>
+							<fail>true</fail>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>1.0.2.Final</version>
 			</plugin>
 		</plugins>
 	</build>
