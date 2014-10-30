@@ -11,4 +11,4 @@ First working version of gengo crawler that can crawl a german website and after
 
 Made gengo credentials configurable:
 
-   mvn install -Dgengo.credentials.public_key=YOUR_PUBLIC_KEY -Dgengo.credentials.private_key=YOUR_PRIVATE_KEY
+   mvn install -Dgengo.credentials.public_key=YOUR_PUBLIC_KEY -Dgengo.credentials.private_key=YOUR_PRIVATE_KEY -Dgengo.credentials.sandbox=true
