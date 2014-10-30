@@ -13,3 +13,4 @@ hs_err_pid*
 gengo.properties
 src/main/resources/gengo.properties
 src/test/resources/gengo.properties
+/target/

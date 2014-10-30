@@ -8,3 +8,7 @@ First working version of gengo crawler that can crawl a german website and after
   3. Download all found links and extract the text by the given css selector. All html tags are removed
   4. Offer an interface for a human to select the pages including word counts
   5. Send the pages to gengo
+
+Made gengo credentials configurable:
+
+   mvn install -Dgengo.credentials.public_key=YOUR_PUBLIC_KEY -Dgengo.credentials.private_key=YOUR_PRIVATE_KEY
