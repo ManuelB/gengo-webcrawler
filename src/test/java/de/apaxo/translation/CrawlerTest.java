@@ -42,17 +42,26 @@ public class CrawlerTest {
 		Document doc = Jsoup
 				.parse("<html><head><title>Hallo Welt</title></head><body><h1>Headline 1</h1><p>li bla blub</p><h2>More</h2><p>even more <br /> after br </p><ul><li>unordered</li><li>unorderd</li></ul><ol><li>one</li><li>two</li></ol></body></html>");
 		String plainText = Crawler.getPlainText(doc);
-		assertEquals("Hallo Welt\n" + "# Headline 1\n"
-				+ "li bla blub\n" + "## More\n" + "even more after br\n"
-				+ " * unordered\n" + " * unorderd\n" + " 1. one\n" + " 1. two\n"
-				+ "", plainText);
+		String expected = "Hallo Welt\n" + "# Headline 1\n"
+				+ "li bla blub\n" + "## More\n" + "even more \n after br \n"
+				+ " * unordered\n" + " * unorderd\n" + " 1. one\n" + " 1. two"
+				+ "";
+		assertEquals(expected, plainText);
 		doc = Jsoup
 				.parse("<html><head><title>Hallo Welt</title></head><body><h1>Headline 1</h1><p>li bla blub</p><h2>More</h2><p>even more <br /> after br </p><ul><li><li>unordered</li><li>unorderd</li></ul><ol><li>one</li><li>two</li><li></li></ol></body></html>");
 		plainText = Crawler.getPlainText(doc);
-		assertEquals( "Hallo Welt\n" + "# Headline 1\n"
-				+ "li bla blub\n" + "## More\n" + "even more after br\n"
-				+ " * unordered\n" + " * unorderd\n" + " 1. one\n" + " 1. two\n"
-				+ "", plainText);
+		assertEquals(expected, plainText);
+		
+		doc = Jsoup
+				.parse("<html><head><title>Hallo Welt</title></head><body><p>This <strong>strong</strong> men. Is one of the <br /> <p>better</p></p><p>and <a href=\"more.html\" target=\"_blank\">more</a> successful people<img src=\"image1.png\"/> <img src=\"image2.png\" alt=\"Watch him\"/></p></body></html>");
+		plainText = Crawler.getPlainText(doc);
+		assertEquals("Hallo Welt\n" + 
+				"This **strong** men. Is one of the \n" + 
+				"better\n" + 
+				"and \n" + 
+				"[more](more.html) successful people\n" + 
+				"![image1.png]\n" + 
+				"![image2.png](Watch him)", plainText);
 	}
 
 	@Test

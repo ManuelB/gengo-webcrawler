@@ -159,6 +159,12 @@
 	    				</h:selectOneMenu>
 	    			</pf:column>
 
+					<pf:column>
+						<!-- column header -->
+						<f:facet name="header">Preferred Translator?</f:facet>
+						<h:selectBooleanCheckbox value="#{entry.preferredTranslator}" />
+					</pf:column>
+
 				</pf:dataTable>
 				
 				<p class="text-center margin">

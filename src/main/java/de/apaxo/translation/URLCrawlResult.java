@@ -2,6 +2,8 @@ package de.apaxo.translation;
 
 import java.io.Serializable;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class URLCrawlResult implements Serializable {
 	/**
@@ -13,11 +15,12 @@ public class URLCrawlResult implements Serializable {
 	private String sourceLanguage = "de";
 	private String targetLanguage = "en";
 	private String tier = "STANDARD";
+	private Boolean preferredTranslator = false;
 
 	public URLCrawlResult() {
-		
+
 	}
-	
+
 	public URLCrawlResult(URL url, String text) {
 		super();
 		this.url = url;
@@ -39,7 +42,6 @@ public class URLCrawlResult implements Serializable {
 	public void setTargetLanguage(String targetLanguage) {
 		this.targetLanguage = targetLanguage;
 	}
-
 
 	public URL getUrl() {
 		return url;
@@ -71,5 +73,20 @@ public class URLCrawlResult implements Serializable {
 
 	public void setTier(String tier) {
 		this.tier = tier;
+	}
+
+	public Boolean getPreferredTranslator() {
+		return preferredTranslator;
+	}
+
+	public void setPreferredTranslator(Boolean preferredTranslator) {
+		this.preferredTranslator = preferredTranslator;
+	}
+
+	public String getPath() {
+		if (getUrl() != null) {
+			return getUrl().getPath();
+		}
+		return null;
 	}
 }
