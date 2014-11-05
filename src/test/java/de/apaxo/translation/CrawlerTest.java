@@ -60,8 +60,8 @@ public class CrawlerTest {
 				"better\n" + 
 				"and \n" + 
 				"[more](more.html) successful people\n" + 
-				"![image1.png]\n" + 
-				"![image2.png](Watch him)", plainText);
+				"![](image1.png)\n" + 
+				"![Watch him](image2.png)", plainText);
 	}
 
 	@Test

@@ -204,12 +204,15 @@ public class Crawler {
 						} else if (el.tagName().equals("b")) {
 							output.append("**" + getPlainText(el.childNodes())
 									+ "**");
+						} else if (el.tagName().equals("em")) {
+							output.append("*" + getPlainText(el.childNodes())
+									+ "*");
+						} else if (el.tagName().equals("i")) {
+							output.append("*" + getPlainText(el.childNodes())
+									+ "*");
 						} else if (el.tagName().equals("img")) {
-							output.append("\n![" + el.attr("src") + "]");
-							if (el.attr("alt") != null
-									&& !el.attr("alt").equals("")) {
-								output.append("(" + el.attr("alt") + ")");
-							}
+							output.append("\n![" + el.attr("alt") + "]("
+									+ el.attr("src") + ")");
 						} else if (el.tagName().equals("a")) {
 							output.append("\n[" + getPlainText(el.childNodes())
 									+ "](" + el.attr("href") + ")");
@@ -250,7 +253,7 @@ public class Crawler {
 
 		noHTMLString = output.toString();
 		if (noHTMLString != null) {
-			noHTMLString = noHTMLString.replaceAll("[\r\n]+", "\n");
+			noHTMLString = noHTMLString.replaceAll("[\r\n]+", "\n").replaceAll("&nbsp;", " ");
 		}
 		return noHTMLString;
 
@@ -288,8 +291,9 @@ public class Crawler {
 							+ urlCrawlResult.getUrl()
 							+ " by https://github.com/ManuelB/gengo-webcrawler. Please report bugs as comments or github issues.");
 
-			translationJob.setUsePreferredTranslators(urlCrawlResult.getPreferredTranslator());
-			
+			translationJob.setUsePreferredTranslators(urlCrawlResult
+					.getPreferredTranslator());
+
 			jobList.add(translationJob);
 		}
 		String sandboxProperty = properties
