@@ -161,7 +161,11 @@ public class Crawler {
 	 * @return
 	 */
 	public static String getPlainText(Elements elements) {
-		return getPlainText(new ArrayList<>(elements));
+        List<Node> nodeList = new ArrayList<Node>();
+		for (Element element : elements) {
+            nodeList.add(element);
+        }
+		return getPlainText(nodeList);
 	}
 
 	/**
