@@ -63,7 +63,7 @@
 			<!-- best widgets for JSF -->
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>6.0</version>
+			<version>8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.cache</groupId>
